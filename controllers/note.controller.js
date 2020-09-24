@@ -58,7 +58,8 @@ exports.updateNote = async (req, res) => {
   try {
     
     // Get note data
-    const {id, body} = req.body;
+    const {body} = req.body;
+    const {id} = req.params;
 
     // Check note data
     if (!body.length) throwError(400, 'Notatka nie może być pusta');
@@ -84,7 +85,8 @@ exports.deleteNote = async (req, res) => {
   try {
     
     // Get note id
-    const {id} = req.body;
+    const {id} = req.params;
+    console.log(id);
 
 
     // Delete note
