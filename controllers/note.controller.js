@@ -1,5 +1,5 @@
 
-const notesModel = require('../models/notes.model');
+const noteModel = require('../models/note.model');
 
 
 // Create note
@@ -9,7 +9,7 @@ exports.createNote = (req, res) => {
 
 // Get all notes
 exports.getAllNotes = async (req, res) => {
-  const notes = await notesModel.findAllNotes();
+  const notes = await noteModel.findAllNotes();
   
   res.send(notes);
 }
