@@ -25,10 +25,7 @@ exports.createNote = async (req, res) => {
 
     
     // Send note data
-    res.send({
-      id   : note.id,
-      body : note.body
-    });
+    res.send(note);
 
   } catch(err) {
 
@@ -39,9 +36,20 @@ exports.createNote = async (req, res) => {
 
 // Get all notes
 exports.getAllNotes = async (req, res) => {
-  const notes = await noteModel.findAllNotes();
   
-  res.send(notes);
+  try {
+    
+    // Find notes
+    const notes = await noteModel.findNotesByUserId(/*req.session.userId*/ 1);
+    
+    // Send notes data
+    res.send(notes);
+
+  } catch(err) {
+
+    console.log(err);
+    handleError(err, res);
+  }
 }
 
 // Update note

@@ -21,7 +21,14 @@ const findById = async (id) => {
   return await queryDb(query, fields);
 }
 
+// Find note by id
+const findNotesByUserId = async (id) => {
+  const query = 'SELECT * FROM notes WHERE user_id = ?';
+  const fields = [id];
+  return await queryDb(query, fields);
+}
+
 
 module.exports = {
-  createNote, findById
+  createNote, findById, findNotesByUserId
 }
