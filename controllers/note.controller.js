@@ -35,7 +35,7 @@ exports.createNote = async (req, res) => {
 }
 
 // Get all notes
-exports.getAllNotes = async (req, res) => {
+exports.getUserNotes = async (req, res) => {
   
   try {
     
@@ -53,11 +53,50 @@ exports.getAllNotes = async (req, res) => {
 }
 
 // Update note
-exports.updateNote = (req, res) => {
-  res.send('Update note: Not yet implemented');
+exports.updateNote = async (req, res) => {
+  
+  try {
+    
+    // Get note data
+    const {id, body} = req.body;
+
+    // Check note data
+    if (!body.length) throwError(400, 'Notatka nie może być pusta');
+    
+    
+    // Update note
+    const note = await noteModel.updateNote({id, body, userId: /*req.session.userId*/ 1});
+
+    
+    // Send note data
+    res.send(note);
+
+  } catch(err) {
+
+    console.log(err);
+    handleError(err, res);
+  }
 }
 
 // Delete note
-exports.deleteNote = (req, res) => {
-  res.send('Delete note: Not yet implemented');
+exports.deleteNote = async (req, res) => {
+  
+  try {
+    
+    // Get note id
+    const {id} = req.body;
+
+
+    // Delete note
+    await noteModel.deleteNote({id, userId: /*req.session.userId*/ 1});
+
+
+    // Respond
+    res.sendStatus(200);
+
+  } catch(err) {
+
+    console.log(err);
+    handleError(err, res);
+  }
 }
