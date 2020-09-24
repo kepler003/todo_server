@@ -27,13 +27,13 @@ exports.signUp = async (req, res) => {
     const user = await userModel.addUser({username, password});
 
     // Create session
-    req.session.userId = user.insertId;
+    req.session.userId = user.id;
 
-
-    // Find notes
-    // ???
-  
-    res.send('Sign up: Not yet implemented');
+    
+    res.send({
+      ...user,
+      user_password: undefined
+    });
 
   } catch(err) {
 

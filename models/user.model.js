@@ -4,8 +4,20 @@ const queryDb = require('../middleware/queryDb');
 
 // Add new user
 const addUser = async ({username, password}) => {
+
+  // Create
   const query = 'INSERT INTO users (username, user_password) VALUES (?, ?)';
   const fields = [username, password];
+  const addData = await queryDb(query, fields);
+
+  // Find
+  return (await findById(addData.insertId))[0];
+}
+
+// Find user by id
+const findById = async (id) => {
+  const query = 'SELECT * FROM users WHERE id = ?';
+  const fields = [id];
   return await queryDb(query, fields);
 }
 
