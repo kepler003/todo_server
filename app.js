@@ -1,5 +1,7 @@
+
 const express = require('express');
 const app = express();
+const session = require('express-session');
 
 
 const PORT = process.env.PORT || 3000;
@@ -7,6 +9,12 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'secret word',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 app.use(require('./routes/index.js'));
 
 
