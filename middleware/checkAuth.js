@@ -1,5 +1,5 @@
 
-const auth = (req, res, next) => {
+const checkAuth = (req, res, next) => {
   if(!res.session) {
     res.sendStatus(401);
   } else {
@@ -8,4 +8,4 @@ const auth = (req, res, next) => {
 }
 
 
-module.exports = auth;
+module.exports = checkAuth;

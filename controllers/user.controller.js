@@ -1,5 +1,7 @@
 
+const throwError = require('../middleware/throwError');
 const userModel = require('../models/user.model');
+const noteModel = require('../models/note.model');
 const handleError = require('../middleware/handleError');
 
 
@@ -7,26 +9,86 @@ const handleError = require('../middleware/handleError');
 exports.signUp = async (req, res) => {
 
   try {
+    
+    // Get user data
+    const {username, password} = req.body;
+    
+    
+    // Validate credentials
+    if(!username && !password) throwError(401, 'Nieprawidłowe dane do rejestracji');
+    if(!username)              throwError(401, 'Nieprawidłowa nazwa użytkownika');
+    if(!password)              throwError(401, 'Nieprawidłowe hasło');
+
+    // Check if username taken
+    if(await userModel.isUsernameTaken(username)) throwError(409, 'Nazwa użytkownika jest już używana');
+    
+    
+    // Add user
+    const user = await userModel.addUser({username, password});
+
+    // Create session
+    req.session.userId = user.insertId;
+
+
+    // Find notes
+    // ???
   
-    await userModel.signUp({
-      username      : req.body.username,
-      user_password : req.body.password
-    });
-  
-    res.send('Log in: Not yet implemented');
+    res.send('Sign up: Not yet implemented');
 
   } catch(err) {
-
+    
+    console.log(err);
     handleError(err, res);
   }
 }
 
 // Log in
-exports.logIn = (req, res) => {
-  res.send('Log in: Not yet implemented');
+exports.logIn = async (req, res) => {
+
+  try {
+
+    // Get user data
+    const {username, password} = req.body;
+        
+        
+    // Validate credentials
+    if(!username || !password) throwError(401, 'Nieprawidłowe dane logowania');
+
+    
+    // Find user
+    const user = await userModel.findByUsernameAndPassword({username, password});
+
+    if(user.length === 0) throwError(401, 'Nieprawidłowe dane logowania');
+
+
+    // Sign in
+    req.session.userId = user[0].id;
+
+
+    // Find notes
+    // ???
+
+
+    res.send('Log in: Not yet implemented');
+
+  } catch(err) {
+
+    console.log(err);
+    handleError(err, res);
+  }
 };
 
 // Log out
 exports.logOut = (req, res) => {
-  res.send('Log out: Not yet implemented');
+
+  try {
+
+    req.session.destroy();
+    res.sendStatus(200);
+
+  } catch(err) {
+
+    console.log(err);
+    handleError(err, res);
+  }
 };

@@ -1,18 +1,36 @@
 
 const throwError = require('../middleware/throwError');
-const db = require('../config/db.config');
+const queryDb = require('../middleware/queryDb');
 
-exports.signUp = async ({username, password}) => {
 
-  throwError(401);
-
-  // const query = `INSERT INTO users (username, user_password) VALUES ('Frank', 'mysecret')`;
-
-  // return new Promise((resolve, reject) => {
-  //   db.query('SELECT * FROM books', (err, result) => err ? reject(err) : resolve(result));
-  // })
+// Add new user
+const addUser = async ({username, password}) => {
+  const query = 'INSERT INTO users (username, user_password) VALUES (?, ?)';
+  const fields = [username, password];
+  return await queryDb(query, fields);
 }
 
-exports.logIn = async () => {}
+// Find user by username
+const findByUsername = async (username) => {
+  const query = 'SELECT * FROM users WHERE username=?';
+  const fields = [username];
+  return await queryDb(query, fields);
+}
 
-exports.logOut = async () => {}
+// Check if username already taken
+const isUsernameTaken = async (username) => {
+  const users = await findByUsername(username);
+  return users.length === 0 ? false : true;
+}
+
+// Check if username already taken
+const findByUsernameAndPassword = async ({username, password}) => {
+  const query = 'SELECT * FROM users WHERE username=? AND user_password=?';
+  const fields = [username, password];
+  return await queryDb(query, fields);
+}
+
+
+module.exports = {
+  addUser, findByUsername, isUsernameTaken, findByUsernameAndPassword
+}
