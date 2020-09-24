@@ -56,20 +56,23 @@ exports.logIn = async (req, res) => {
 
     
     // Find user
-    const user = await userModel.findByUsernameAndPassword({username, password});
-
-    if(user.length === 0) throwError(401, 'Nieprawidłowe dane logowania');
-
+    const user = await userModel.validateUser({username, password});
 
     // Sign in
-    req.session.userId = user[0].id;
+    req.session.userId = user.id;
 
 
     // Find notes
-    // ???
+    const notes = await noteModel.findNotesByUserId(user.id);
 
 
-    res.send('Log in: Not yet implemented');
+    res.send({
+      user: {
+        ...user,
+        user_password: undefined
+      },
+      notes
+    });
 
   } catch(err) {
 

@@ -34,14 +34,21 @@ const isUsernameTaken = async (username) => {
   return users.length === 0 ? false : true;
 }
 
-// Check if username already taken
-const findByUsernameAndPassword = async ({username, password}) => {
+// Validate user
+const validateUser = async ({username, password}) => {
+
+  // Find user
   const query = 'SELECT * FROM users WHERE username=? AND user_password=?';
   const fields = [username, password];
-  return await queryDb(query, fields);
+  const user =  await queryDb(query, fields);
+
+  // Check if correct output
+  if(user.length !== 1) throwError(401, 'Nieprawidłowe dane logowania');
+
+  return user[0];
 }
 
 
 module.exports = {
-  addUser, findByUsername, isUsernameTaken, findByUsernameAndPassword
+  addUser, findByUsername, isUsernameTaken, validateUser
 }
