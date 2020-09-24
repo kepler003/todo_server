@@ -19,7 +19,7 @@ exports.createNote = async (req, res) => {
 
     // Create note
     const note = await noteModel.createNote({
-      userId: /*req.session.userId*/ 23,
+      userId: req.session.userId,
       body
     });
 
@@ -40,7 +40,7 @@ exports.getUserNotes = async (req, res) => {
   try {
     
     // Find notes
-    const notes = await noteModel.findNotesByUserId(/*req.session.userId*/ 23);
+    const notes = await noteModel.findNotesByUserId(req.session.userId);
     
     // Send notes data
     res.send(notes);
@@ -66,7 +66,7 @@ exports.updateNote = async (req, res) => {
     
     
     // Update note
-    const note = await noteModel.updateNote({id, body, userId: /*req.session.userId*/ 23});
+    const note = await noteModel.updateNote({id, body, userId: req.session.userId});
 
     
     // Send note data
@@ -90,7 +90,7 @@ exports.deleteNote = async (req, res) => {
 
 
     // Delete note
-    await noteModel.deleteNote({id, userId: /*req.session.userId*/ 23});
+    await noteModel.deleteNote({id, userId: req.session.userId});
 
 
     // Respond
