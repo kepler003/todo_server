@@ -1,8 +1,8 @@
 
 const throwError = require('../middleware/throwError');
+const handleError = require('../middleware/handleError');
 const userModel = require('../models/user.model');
 const noteModel = require('../models/note.model');
-const handleError = require('../middleware/handleError');
 
 
 // Sign up
@@ -36,7 +36,7 @@ exports.signUp = async (req, res) => {
     res.send('Sign up: Not yet implemented');
 
   } catch(err) {
-    
+
     console.log(err);
     handleError(err, res);
   }

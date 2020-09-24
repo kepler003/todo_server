@@ -1,5 +1,4 @@
 
-const throwError = require('../middleware/throwError');
 const queryDb = require('../middleware/queryDb');
 
 
