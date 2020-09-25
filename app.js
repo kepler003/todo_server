@@ -4,7 +4,7 @@ const app = express();
 const session = require('express-session');
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 
 app.use(express.json());
@@ -13,7 +13,7 @@ app.use(session({
   secret: 'secret word',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: false }
 }))
 
 app.use(require('./routes/index.js'));

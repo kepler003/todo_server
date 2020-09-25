@@ -9,7 +9,7 @@ const allowIfLoggedOut = require('../middleware/allowIfLoggedOut');
 router.post('/user', allowIfLoggedOut, userController.signUp);
 
 // Log in
-router.post('/user/login', allowIfLoggedOut, userController.logIn);
+router.post('/user/login', userController.logIn);
 
 // Log out
 router.post('/user/logout', userController.logOut);

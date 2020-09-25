@@ -29,7 +29,6 @@ exports.createNote = async (req, res) => {
 
   } catch(err) {
 
-    console.log(err);
     handleError(err, res);
   }
 }
@@ -47,7 +46,6 @@ exports.getUserNotes = async (req, res) => {
 
   } catch(err) {
 
-    console.log(err);
     handleError(err, res);
   }
 }
@@ -74,7 +72,6 @@ exports.updateNote = async (req, res) => {
 
   } catch(err) {
 
-    console.log(err);
     handleError(err, res);
   }
 }
@@ -86,7 +83,6 @@ exports.deleteNote = async (req, res) => {
     
     // Get note id
     const {id} = req.params;
-    console.log(id);
 
 
     // Delete note
@@ -98,7 +94,6 @@ exports.deleteNote = async (req, res) => {
 
   } catch(err) {
 
-    console.log(err);
     handleError(err, res);
   }
 }

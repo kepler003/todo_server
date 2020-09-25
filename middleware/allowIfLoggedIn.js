@@ -1,7 +1,7 @@
 
 const allowIfLoggedIn = (req, res, next) => {
   
-  if(!res.session) {
+  if(!req.session.userId) {
     
     res.sendStatus(401);
   

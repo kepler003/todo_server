@@ -37,7 +37,6 @@ exports.signUp = async (req, res) => {
 
   } catch(err) {
 
-    console.log(err);
     handleError(err, res);
   }
 }
@@ -71,12 +70,11 @@ exports.logIn = async (req, res) => {
         ...user,
         user_password: undefined
       },
-      notes
+      notes: notes.length ? notes : null
     });
 
   } catch(err) {
 
-    console.log(err);
     handleError(err, res);
   }
 };
@@ -91,7 +89,6 @@ exports.logOut = (req, res) => {
 
   } catch(err) {
 
-    console.log(err);
     handleError(err, res);
   }
 };

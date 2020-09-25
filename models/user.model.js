@@ -1,5 +1,6 @@
 
 const queryDb = require('../middleware/queryDb');
+const throwError = require('../middleware/throwError');
 
 
 // Add new user
