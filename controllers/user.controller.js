@@ -74,7 +74,7 @@ exports.logIn = async (req, res) => {
     });
 
   } catch(err) {
-
+    
     handleError(err, res);
   }
 };
